@@ -1,9 +1,8 @@
 #Potential Outcomes program Install
 #Santiago Silva
 #Feb 13, 2021
-#this file contains the code Dr. Cunnigham emailed us in preparation of the thronton 
-#replication
-
+#this file contains the code Dr. Cunnigham emailed us in preparation of the thronton replication
+#this is part of the Randomized Control Experiment Chapter
 install.packages("tidyverse")
 install.packages("cli")
 install.packages("haven")
