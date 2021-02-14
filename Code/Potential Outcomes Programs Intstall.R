@@ -1,6 +1,8 @@
 #Potential Outcomes program Install
 #Santiago Silva
 #Feb 13, 2021
+#this file contains the code Dr. Cunnigham emailed us in preparation of the thronton 
+#replication
 
 install.packages("tidyverse")
 install.packages("cli")
