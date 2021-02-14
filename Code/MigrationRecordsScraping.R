@@ -185,7 +185,7 @@ View(Migration)
 remDr$close()
 
 #export
-write.xlsx(Migration, "MigrationDS.xlsx")
+write.xlsx(IrishFamine1, "PeopleWhoMigrated.xlsx")
 
 
 
