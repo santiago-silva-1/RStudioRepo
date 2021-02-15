@@ -76,7 +76,7 @@ firstnextpage$clickElement()
 ####build loop
 
 library(RSelenium)
-rD=RSelenium::rsDriver(port = 8937L, browser =("firefox"))
+rD=RSelenium::rsDriver(port = 8957L, browser =("firefox"))
 #that starts an remote Rselenium driver
 #a firefox window should open
 #need Java on the computer
@@ -85,43 +85,44 @@ remDr=rD$client
 
 
 #figure out how the page changes, 12092 pages total
-IrishFamine2=data.frame()
-for (page_result in seq(from =1201, to= 2400, by=1)) {
+#IrishFamine3=data.frame()
+for (page_result in seq(from =2236, to= 2400, by=1)) {
  link= paste0("https://aad.archives.gov/aad/display-partial-records.jsp?dt=180&sc=17169%2C17170%2C17172%2C17189%2C17177%2C17180%2C17190%2C17181&cat=all&tf=F&bc=sl%2Cfd&q=&as_alq=&as_anq=&as_epq=&as_woq=&nfo_17169=V%2C20%2C1900&op_17169=0&txt_17169=&nfo_17170=V%2C19%2C1900&op_17170=0&txt_17170=&nfo_17172=N%2C3%2C1900&cl_17172=&nfo_17189=N%2C3%2C1900&cl_17189=&nfo_17177=V%2C20%2C1900&op_17177=0&txt_17177=&nfo_17180=N%2C3%2C1900&cl_17180=&nfo_17190=N%2C8%2C1900&cl_17190=&nfo_17181=D%2C10%2C1846&op_17181=8&txt_17181=1%2F12%2F1846&txt_17181=12%2F31%2F1851&rpp=50&mtch=604596&pg=", page_result ,"&rpp=50")
  remDr$navigate(link)
-Sys.sleep(2.5)
+ 
+Sys.sleep(5)
+
 lastname=remDr$findElements("css selector", "tbody td:nth-child(2)")
 LastName=unlist(lapply(lastname, function(x){x$getElementText()}))
 LastName=LastName[5:54]
-LastName
+
 
 firstname=remDr$findElements("css selector", "tbody td:nth-child(3)")
 FirstName=unlist(lapply(firstname, function(x){x$getElementText()}))
-FirstName
+
 
 age=remDr$findElements("css selector", "tbody td:nth-child(4)")
 Age=unlist(lapply(age, function(x){x$getElementText()}))
-Age
+
 
 nativecountrycode=remDr$findElements("css selector", "tbody td:nth-child(5)")
 NativeCtryCode=unlist(lapply(nativecountrycode, function(x){x$getElementText()}))
-NativeCtryCode
+
 
 destination=remDr$findElements("css selector", "tbody td:nth-child(6)")
 Destination=unlist(lapply(destination, function(x){x$getElementText()}))
-Destination
+
 
 portofembark =remDr$findElements("css selector", "tbody td:nth-child(7)")
 PortofEmbark=unlist(lapply(portofembark , function(x){x$getElementText()}))
-PortofEmbark
+
 
 manifestinum =remDr$findElements("css selector", "tbody td:nth-child(8)")
 ManifestNum=unlist(lapply(manifestinum , function(x){x$getElementText()}))
-ManifestNum
+
 
 arrivaldate=remDr$findElements("css selector", "tbody td:nth-child(9)")
 ArrivalDate=unlist(lapply(arrivaldate, function(x){x$getElementText()}))
-ArrivalDate
 
 
 IrishFamine2=rbind(IrishFamine2 , data.frame(LastName=LastName,FirstName=FirstName , Age= Age, NativeCountryCode= NativeCtryCode,
@@ -130,12 +131,14 @@ IrishFamine2=rbind(IrishFamine2 , data.frame(LastName=LastName,FirstName=FirstNa
                                        PassengerArrivalDate=ArrivalDate ,stringsAsFactors = FALSE))
 print(paste("Page:", page_result))
 }
-dim(IrishFamine2)
-head(IrishFamine1)
-tail(IrishFamine1)
 dim(IrishFamine1)
+dim(IrishFamine2)
+#sum(dim(IrishFamine1)-dim(IrishFamine2))
+#missing 50 obs from IrishFamine1
+#missing 900 observations from IrishFamine2
+
 #IrishFamine1 goes from page 1 to 1200
-#IrishFamine2 goes from page 1201 to 2400
+#IrishFamine2 goes from page 1201 to 2400, start time 1:00 pm
 
 
 #need to add last page manually because it has 20 observations, not 50 like the other pages
