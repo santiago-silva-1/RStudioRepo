@@ -6,10 +6,11 @@
 WORK.DIR = "Downloads"
 setwd(WORK.DIR)
 
-
+install.packages("openxlsx")
+library(openxlsx)
 library(rvest)
 library(dplyr)
-library("xlsx")
+library(xlsx)
 library(MASS)
 
 #use Rselenium
@@ -188,7 +189,10 @@ View(Migration)
 remDr$close()
 
 #export
+
 write.xlsx(IrishFamine1, "PeopleWhoMigrated.xlsx")
+write.xlsx2(IrishFamine2, "PeopleWhoMigratedpart2.xlsx")
+openxlsx::write.xlsx(IrishFamine2, file = "PeopleWhoMigratedpart2.xlsx")
 
-
+?write
 
