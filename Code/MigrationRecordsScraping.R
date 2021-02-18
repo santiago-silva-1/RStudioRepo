@@ -6,6 +6,8 @@
 WORK.DIR = "Downloads"
 setwd(WORK.DIR)
 
+People5=read.csv("PeopleWhoMigratedpart5.csv")
+
 install.packages("openxlsx")
 library(openxlsx)
 library(rvest)
@@ -13,10 +15,11 @@ library(dplyr)
 library(xlsx)
 library(MASS)
 
+
 #use Rselenium
 #install.packages("Rselenium")
 library(RSelenium)
-rD=RSelenium::rsDriver(port = 8030L, browser =("firefox"))
+rD=RSelenium::rsDriver(port = 8130L, browser =("firefox"))
 #that starts an remote Rselenium driver
 #a firefox window should open
 #need Java on the computer
@@ -77,7 +80,7 @@ firstnextpage$clickElement()
 ####build loop
 
 library(RSelenium)
-rD=RSelenium::rsDriver(port = 2930L, browser =("firefox"))
+rD=RSelenium::rsDriver(port = 2911L, browser =("firefox"))
 #that starts an remote Rselenium driver
 #a firefox window should open
 #need Java on the computer
@@ -88,7 +91,7 @@ remDr$navigate("https://aad.archives.gov/aad/display-partial-records.jsp?dt=180&
 
 #figure out how the page changes, 12092 pages total
 #IrishFamine5=data.frame()
-for (page_result in seq(from =4801, to= 6000, by=1)) {
+for (page_result in seq(from =5898 , to= 6000, by=1)) {
  link= paste0("https://aad.archives.gov/aad/display-partial-records.jsp?dt=180&sc=17169%2C17170%2C17172%2C17189%2C17177%2C17180%2C17190%2C17181&cat=all&tf=F&bc=sl%2Cfd&q=&as_alq=&as_anq=&as_epq=&as_woq=&nfo_17169=V%2C20%2C1900&op_17169=0&txt_17169=&nfo_17170=V%2C19%2C1900&op_17170=0&txt_17170=&nfo_17172=N%2C3%2C1900&cl_17172=&nfo_17189=N%2C3%2C1900&cl_17189=&nfo_17177=V%2C20%2C1900&op_17177=0&txt_17177=&nfo_17180=N%2C3%2C1900&cl_17180=&nfo_17190=N%2C8%2C1900&cl_17190=&nfo_17181=D%2C10%2C1846&op_17181=8&txt_17181=1%2F12%2F1846&txt_17181=12%2F31%2F1851&rpp=50&mtch=604596&pg=", page_result ,"&rpp=50")
  remDr$navigate(link)
  
@@ -131,17 +134,22 @@ IrishFamine5=rbind(IrishFamine5 , data.frame(LastName=LastName,FirstName=FirstNa
                                        Destination= Destination, PassengerPortOfEmbarkationCode= PortofEmbark, 
                                        ManifestIdentificationNumber=ManifestNum , 
                                        PassengerArrivalDate=ArrivalDate ,stringsAsFactors = FALSE))
-print(paste("Page:", page_result, print(dim(IrishFamine3))))
+print(paste("Page:", page_result, (dim(IrishFamine5))))
 }
 dim(IrishFamine5)
 tail(IrishFamine5)
 #sum(dim(IrishFamine1)-dim(IrishFamine2))
 #missing 50 obs from IrishFamine1
 #missing 900 observations from IrishFamine2
+#800 extra obs in Irishfamine5
 
 #IrishFamine1 goes from page 1 to 1200
 #IrishFamine2 goes from page 1201 to 2400, start time 1:00 pm
-##IrishFamine2 goes from page 2401 to 3600,
+#IrishFamine3 goes from page 2401 to 3600,
+#IrishFamine4 goes from page 3601 to 4800,
+#IrishFamine5 goes from page 4801 to 6000,
+#IrishFamine6 goes from page 6001 to 7200,
+
 
 
 ##last page finished is 5068
