@@ -10,11 +10,12 @@ read_data <- function(df)
 }
 
 hiv <- read_data("thornton_hiv.dta")
-
+#we just loaded the data
 
 # creating the permutations
 
 tb <- NULL
+#just created object "tb"
 
 permuteHIV <- function(df, random = TRUE){
   tb <- df
@@ -41,10 +42,14 @@ permuteHIV <- function(df, random = TRUE){
   
   return(ate)
 }
+#just created function permuteHIV, which randomly assigns treatment 
+
 
 permuteHIV(hiv, random = FALSE)
+#what is this?
 
 iterations <- 1000
+#we're going to repeat something 100 times
 
 permutation <- tibble(
   iteration = c(seq(iterations)), 
@@ -52,6 +57,8 @@ permutation <- tibble(
     c(permuteHIV(hiv, random = FALSE), map(seq(iterations-1), ~permuteHIV(hiv, random = TRUE)))
   )
 )
+#just created object "permutation"
+
 
 #calculating the p-value
 
