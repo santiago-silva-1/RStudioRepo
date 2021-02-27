@@ -99,7 +99,7 @@ Sys.sleep(3.5)
 
 lastname=remDr$findElements("css selector", "tbody td:nth-child(2)")
 LastName=unlist(lapply(lastname, function(x){x$getElementText()}))
-LastName=LastName[5:54]
+LastName=LastName[5:50]
 
 
 firstname=remDr$findElements("css selector", "tbody td:nth-child(3)")
@@ -212,5 +212,27 @@ write.xlsx(IrishFamine1, "PeopleWhoMigrated.xlsx")
 write.xlsx2(IrishFamine3, "PeopleWhoMigratedpart3.xlsx")
 openxlsx::write.xlsx(IrishFamine9, file = "PeopleWhoMigratedpart9.xlsx")
 
-?write
+#now merge everything
+#now bring it Irishfamine 1,2,3,4,5
+#Irishfamine 6,7,8,9,10 in enviroment already
+People1=read.csv("Output/Migrationcsv1.csv")
+dim(People1)
+People1=People1[,-1]
+head(People1)
+People2=read.csv("Output/Migrationcsv2.csv")
+head(People2)
+People3=read.csv("Output/Migrationcsv3.csv")
+People4=read.csv("Output/Migrationcsv4.csv")
+People5=read.csv("Output/Migrationcsv5.csv")
+CompleteMigration=rbind(CompleteMigration, People3, People4, People5, IrishFamine6, IrishFamine7, IrishFamine8, IrishFamine9, IrishFamine10)
+dim(CompleteMigration)
+CompleteMigration=unique(CompleteMigration)
+dim(CompleteMigration)
+
+#export final dataset
+openxlsx::write.xlsx(CompleteMigration, file = "CompleteMigration.xlsx")
+names(CompleteMigration)
+
+
+
 
